@@ -5,6 +5,7 @@
  */
 package com.fitnatic.entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -14,25 +15,21 @@ import java.util.Date;
 public class Reponse {
     private int reponseId; // Identifiant unique de la réponse
     private int reclamationId; // Identifiant de la réclamation à laquelle cette réponse est associée
-    private Date dateCreation; // Date de création de la réponse
+    private LocalDate dateCreation; // Date de création de la réponse
     private String contenu; // Contenu de la réponse
 
-    public Reponse(int reponseId, int reclamationId, Date dateCreation, String contenu) {
+    public Reponse() {
+    }
+
+    public Reponse(int reponseId, int reclamationId, LocalDate dateCreation, String contenu) {
         this.reponseId = reponseId;
         this.reclamationId = reclamationId;
         this.dateCreation = dateCreation;
         this.contenu = contenu;
     }
 
-    public Reponse(int reponseId, int reclamationId, String contenu) {
-        this.reponseId = reponseId;
-        this.reclamationId = reclamationId;
-        this.contenu = contenu;
-    }
-
-    public Reponse(int reponseId, int reclamationId) {
-        this.reponseId = reponseId;
-        this.reclamationId = reclamationId;
+    public Reponse(int reclamationId, LocalDate date, String contenu) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getReponseId() {
@@ -51,11 +48,11 @@ public class Reponse {
         this.reclamationId = reclamationId;
     }
 
-    public Date getDateCreation() {
+    public LocalDate getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateCreation(Date dateCreation) {
+    public void setDateCreation(LocalDate dateCreation) {
         this.dateCreation = dateCreation;
     }
 
@@ -71,6 +68,10 @@ public class Reponse {
     public String toString() {
         return "Reponse{" + "reponseId=" + reponseId + ", reclamationId=" + reclamationId + ", dateCreation=" + dateCreation + ", contenu=" + contenu + '}';
     }
-    
+
+    public LocalDate getDate() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
 }

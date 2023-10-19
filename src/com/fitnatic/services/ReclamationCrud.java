@@ -35,15 +35,19 @@ public class ReclamationCrud {
      MyConnection cnx =MyConnection.getInstance();
         Connection myconx = cnx.getCnx();
     public void ajouterReclamation(Reclamation r){
-       
+     
+        LocalDate date = r.getDate(); // Supposons que r.getDate() renvoie une java.util.Date           
        
             try {
         String requete = "INSERT INTO reclamation (userId, date, description) VALUES (?, ?, ?)";
-            java.util.Date date = r.getDate(); // Supposons que r.getDate() renvoie une java.util.Date            
             PreparedStatement st = myconx.prepareStatement(requete);
-
+            
+            //st.setInt(1, r.getReclamationId());
             st.setInt(1, r.getUserId());
-            st.setDate(2, new java.sql.Date(date.getTime()));
+            //st.setDate(2, (java.sql.Date) sqldate);
+            //java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+            java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+            st.setDate(2, sqlDate);
             st.setString(3, r.getDescription());
 
             st.executeUpdate();
@@ -53,13 +57,40 @@ public class ReclamationCrud {
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
-    }
-
-       
       
-      public List<Reclamation> afficherReclamation(){
+
+    }
+           /* try {
+        String requete = "INSERT INTO reclamation (userId, date, description) VALUES (?, ?, ?)";
+                LocalDate date = r.getDate(); // Supposons que r.getDate() renvoie une java.util.Date       
+            Date sqldate=Date.valueOf(LocalDate);
+            ResultSet resultset =st.executeQuery();
+            if(resultset.next()){
+            PreparedStatement st = myconx.prepareStatement(requete);
+
+            st.setInt(1, r.getUserId());
+            st.setDate(2, (java.sql.Date) sqldate);
+            st.setString(3, r.getDescription());
+
+            st.executeUpdate();
+            }
+            // Affichez un message de confirmation si nécessaire
+          //  System.out.println("Réclamation ajoutée!");
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }*/
+    
+
+    public void ShowReclamation(TableView<Reclamation> tab_rec, TableColumn<Reclamation, Integer> id_col, 
+        TableColumn<Reclamation, String> date_col, TableColumn<Reclamation, String> desc_col) throws SQLException {
+
+}
+
+
+      
+      /*public List<Reclamation> afficherReclamation(){
           return null;
-      }  
+      } */ 
       
    // Méthode pour mettre à jour une réclamation
         public void modifierReclamation(int reclamationId, String nouvelleDescription) {
@@ -91,6 +122,7 @@ public class ReclamationCrud {
         st.setInt(1, reclamationId);
         int rowsAffected = st.executeUpdate();
         
+        
         if (rowsAffected > 0) {
             System.out.println("Réclamation supprimée avec succès !");
         } else {
@@ -102,41 +134,6 @@ public class ReclamationCrud {
 }
             
 
-public void ShowReclamation (TableView<Reclamation> tab_rec, TableColumn<Reclamation, Integer> id_col, TableColumn<Reclamation, String> date_col, TableColumn<Reclamation, String> desc_col) throws SQLException {
-         
-        
-         ObservableList< Reclamation> Reclamationlist =getReclamationlist();
-        
-     
-          
-         
-        id_col.setCellValueFactory(new PropertyValueFactory<>("reclamationId")); ///nom_a de clase eventadmin
-        date_col.setCellValueFactory(new PropertyValueFactory<>("date"));
-        desc_col.setCellValueFactory(new PropertyValueFactory<>("description"));
-       
-        tab_rec.setItems(Reclamationlist);
-}
-         private ObservableList<Reclamation> getReclamationlist() throws SQLException {
-           
-   
-     String query = "SELECT * FROM reclamation";
- 
-           
-            java.sql.PreparedStatement preparedStatement2 = MyConnection.getInstance().getCnx()
-                                    .prepareStatement(query);
-            ResultSet rs =preparedStatement2.executeQuery(query);
-            ObservableList<Reclamation> Reclamationlist =FXCollections.observableArrayList();
-            while (rs.next()){
-              Reclamationlist.add (new Reclamation( 
-                      rs.getInt("reclamationId"),    
-                      rs.getInt("userId"),
-                      rs.getDate("date"),
-                      rs.getString("description")
-              ));                    
-     } 
-        return Reclamationlist;
-         
-     }
-   
-}
 
+
+}

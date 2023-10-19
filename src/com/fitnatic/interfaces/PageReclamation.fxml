@@ -6,18 +6,24 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fitnatic.interfaces.PageReclamationController">
    <children>
-      <AnchorPane id="AnchorPane" layoutX="1.0" prefHeight="400.0" prefWidth="735.0">
+      <AnchorPane id="AnchorPane" layoutX="-6.0" prefHeight="400.0" prefWidth="742.0" style="-fx-background-color: grey;">
          <children>
-            <TextField fx:id="userId" layoutX="76.0" layoutY="79.0" prefHeight="25.0" prefWidth="225.0" />
+            <TextField fx:id="userid" layoutX="76.0" layoutY="79.0" prefHeight="25.0" prefWidth="225.0" />
             <Label layoutX="24.0" layoutY="70.0" prefHeight="42.0" prefWidth="52.0" text="id : " />
             <Label layoutX="22.0" layoutY="132.0" text="date :" />
             <Label layoutX="24.0" layoutY="183.0" text="description :" />
             <TextField fx:id="description_r" layoutX="77.0" layoutY="206.0" prefHeight="139.0" prefWidth="225.0" />
-            <Label layoutX="318.0" prefHeight="69.0" prefWidth="129.0" text="Reclamation" />
+            <Label layoutX="318.0" prefHeight="69.0" prefWidth="177.0" text="Reclamation">
+               <font>
+                  <Font size="26.0" />
+               </font></Label>
             <Button fx:id="retour_rec" layoutX="52.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#retour" text="retour" />
             <Button fx:id="ajouter_rec" layoutX="383.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#ajouter" prefHeight="25.0" prefWidth="70.0" text="ajouter" />
             <DatePicker fx:id="date_rec" layoutX="77.0" layoutY="128.0" prefHeight="25.0" prefWidth="225.0" />
@@ -31,6 +37,12 @@
             </TableView>
             <Button fx:id="supp_rec" layoutX="609.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#supprimer" text="supprimer" />
             <Button fx:id="modif_rec" layoutX="498.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#modifier" prefHeight="25.0" prefWidth="70.0" text="modifier" />
+            <ImageView fitHeight="60.0" fitWidth="129.0" layoutX="568.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="69.0" fitWidth="150.0" layoutX="-1.0" layoutY="-2.0">
+               <image>
+                  <Image url="@../../../../../../Downloads/387507167_259224033786896_5617290545580039491_n.jpg" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>

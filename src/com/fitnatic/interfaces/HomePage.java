@@ -5,6 +5,7 @@
  */
 package com.fitnatic.interfaces;
 
+import java.io.IOException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
@@ -22,15 +23,21 @@ import javafx.stage.Stage;
  */
 public class HomePage extends Application {
     
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("PageReclamation.fxml"));
-        
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
-        stage.show();
+   public void start(Stage primaryStage) {
+       
+        try {
+            //Parent root = FXMLLoader.load(getClass().getResource("PageReclamation.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("PageReponse.fxml"));
+            Scene scene = new Scene(root);
+            
+            primaryStage.setTitle("FitNatic!");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+         }
     }
+    
     /**
      * @param args the command line arguments
      */

@@ -15,17 +15,28 @@ import java.util.Date;
 public class Reclamation {
     private int reclamationId;
     private int userId;
-    private Date date;
+    private LocalDate date;
     private String description;
+
+    public Reclamation(int userId, LocalDate date, String description) {
+        this.userId = userId;
+        this.date = date;
+        this.description = description;
+    }
 
     public Reclamation() {
     }
 
-    public Reclamation(int reclamationId, int userId, Date date, String description) {
+    public Reclamation(int reclamationId, int userId, LocalDate date, String description) {
         this.reclamationId = reclamationId;
         this.userId = userId;
         this.date = date;
         this.description = description;
+    }
+
+    public Reclamation(int reclamationId, int userId) {
+        this.reclamationId = reclamationId;
+        this.userId = userId;
     }
 
     public int getReclamationId() {
@@ -44,11 +55,11 @@ public class Reclamation {
         this.userId = userId;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -65,5 +76,4 @@ public class Reclamation {
         return "Reclamation{" + "reclamationId=" + reclamationId + ", userId=" + userId + ", date=" + date + ", description=" + description + '}';
     }
 
-    
 }
