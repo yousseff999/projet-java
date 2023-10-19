@@ -106,7 +106,7 @@ public class PageReclamationController implements Initializable {
         
        
          int id_u; 
-      if (id.length()<1) {
+      if ((id.length()<1)|| (!id.matches("\\d+"))) {
      
           Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(null);
@@ -201,13 +201,19 @@ public class PageReclamationController implements Initializable {
 Reclamation r2=new Reclamation(r.getReclamationId(),r.getUserId(),r.getDate(),desc);
     // Appelez la méReclamationthode de modification de la classe ReclamationCrud
     ReclamationCrud rc=new ReclamationCrud();
+     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("Warning");
+            alert.setContentText("Confirmation..!");
+        Optional<ButtonType>result =  alert.showAndWait(); 
+        if(result.get() == ButtonType.OK){
     rc.modifierReclamation(r2.getReclamationId(), desc);
         try {
             ShowReclamation();
         } catch (SQLException ex) {
             Logger.getLogger(PageReclamationController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
+        }
+        else{}
     }
 /*public void ShowReclamation (TableView<Reclamation> tab_rec, TableColumn<Reclamation, Integer> id_col, 
         TableColumn<Reclamation, String> date_col, TableColumn<Reclamation, String> desc_col) throws SQLException {
