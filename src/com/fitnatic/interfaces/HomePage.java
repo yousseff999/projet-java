@@ -28,6 +28,8 @@ public class HomePage extends Application {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("PageReclamation.fxml"));
             //Parent root = FXMLLoader.load(getClass().getResource("PageReponse.fxml"));
+            //Parent root = FXMLLoader.load(getClass().getResource("PageReclamationStat.fxml"));
+
             Scene scene = new Scene(root);
             
             primaryStage.setTitle("FitNatic!");

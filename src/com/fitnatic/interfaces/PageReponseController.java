@@ -5,6 +5,7 @@
  */
 package com.fitnatic.interfaces;
 
+import static com.fitnatic.email.EmailSender.sendConfirmationEmail;
 import com.fitnatic.entities.Reponse;
 import com.fitnatic.services.ReponseCrud;
 import com.fitnatic.utils.MyConnection;
@@ -37,7 +38,6 @@ public class PageReponseController implements Initializable {
     private Button envoyer_rep;
     @FXML
     private Button retour_rep;
-    @FXML
     private TextField idrec_rep;
     @FXML
     private TextField contenu_rep;
@@ -48,6 +48,8 @@ public class PageReponseController implements Initializable {
     MyConnection mc = MyConnection.getInstance();
     String query = null;
     PreparedStatement pst = null;
+    @FXML
+    private TextField user_email;
 
     /**
      * Initializes the controller class.
@@ -59,36 +61,38 @@ public class PageReponseController implements Initializable {
  
     @FXML
     private void envoyer(MouseEvent event) {
-    String idRecText = idrec_rep.getText();
+    String Email = user_email.getText();
     LocalDate date = date_rep.getValue();
     String contenu = contenu_rep.getText();
 
-    if (idRecText.isEmpty() || date == null || contenu.isEmpty()) {
+    if (Email.isEmpty() || date == null || contenu.isEmpty()) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText("Données non disponibles!!");
         alert.showAndWait();
         return; // Sortez de la méthode en cas de données manquantes
     }
 
-    int reclamationId;
-    try {
-        reclamationId = Integer.parseInt(idRecText);
+    int email_u;
+    /*try {
+        email_u = Integer.parseInt(Email);
     } catch (NumberFormatException e) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText("L'identifiant de réclamation n'est pas un nombre entier valide.");
         alert.showAndWait();
         return; // Sortez de la méthode en cas d'erreur de conversion
-    }
+    }*/
 
-    String query = "INSERT INTO reponse (reclamationId, dateCreation, contenu) VALUES (?, ?, ?)";
+    String query = "INSERT INTO reponse (Email, dateCreation, contenu) VALUES (?, ?, ?)";
     try {
         pst = mc.getCnx().prepareStatement(query);
        //pst.setInt(1, reponseId);
-        pst.setInt(1, reclamationId);
+        pst.setString(1, Email);
         java.sql.Date sqlDate = java.sql.Date.valueOf(date);
         pst.setDate(2, sqlDate);
         pst.setString(3, contenu);
         int rowsAffected = pst.executeUpdate();
+        
+        sendConfirmationEmail(user_email.getText(),contenu_rep.getText());
 
         if (rowsAffected > 0) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -100,7 +104,7 @@ public class PageReponseController implements Initializable {
             alert.showAndWait();
         }
 
-        idrec_rep.clear();
+        user_email.clear();
         date_rep.setValue(null);
         contenu_rep.clear();
     } catch (SQLException ex) {

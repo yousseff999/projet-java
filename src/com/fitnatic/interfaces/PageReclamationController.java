@@ -8,6 +8,7 @@ package com.fitnatic.interfaces;
 import com.fitnatic.entities.Reclamation;
 import com.fitnatic.services.ReclamationCrud;
 import com.fitnatic.utils.MyConnection;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,7 +26,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -76,10 +81,13 @@ public class PageReclamationController implements Initializable {
     ReclamationCrud bb= new ReclamationCrud ();
     @FXML
     private TableColumn<Reclamation, Integer> nom_col;
-   
+    
     /**
      * Initializes the controller class.
      */
+    private String[] badWords = {"Merde", "Putain", "Fils de pute", "Idiot", "Je vais te tuer", "LGBTQ", "racicte","terroriste"};
+    @FXML
+    private Button Évaluer;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -88,6 +96,15 @@ public class PageReclamationController implements Initializable {
             Logger.getLogger(PageReclamationController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }    
+    
+    private boolean containsBadWords(String description) {
+    for (String badWord : badWords) {
+        if (description.toLowerCase().contains(badWord.toLowerCase())) {
+            return true;
+        }
+    }
+    return false;
+}
 
     @FXML
     private void retour(MouseEvent event) {
@@ -103,10 +120,10 @@ public class PageReclamationController implements Initializable {
         LocalDate date=date_rec.getValue();
         String desc=description_r.getText();
        int reclamationId=0;
-        
+       int id_u; 
        
-         int id_u; 
-      if ((id.length()<1)|| (!id.matches("\\d+"))) {
+       
+        if ((id.length()<1)|| (!id.matches("\\d+"))) {
      
           Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(null);
@@ -125,6 +142,12 @@ public class PageReclamationController implements Initializable {
             alert.setContentText(" description invalide ..!");
         Optional<ButtonType>result =  alert.showAndWait();     
       }
+      else if (containsBadWords(desc)) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText("La description contient des mots inappropriés.");
+        alert.showAndWait();
+    }
       
         else{
           id_u = Integer.parseInt(userid.getText());
@@ -132,31 +155,7 @@ public class PageReclamationController implements Initializable {
         bb.ajouterReclamation(r);
         ShowReclamation();
         }
-        //bb.ShowReclamation(tab_rec, id_col, date_col, desc_col);
-        
-        
-        
-        
-        
-  /*  // Récupérez les valeurs des champs du formulaire
-    int userIdValue = Integer.parseInt(userId.getText());
-    String descriptionValue = description_r.getText();
-    LocalDate dateValue = date_rec.getValue();
-
-    // Créez une instance de Reclamation avec les valeurs du formulaire
-    Reclamation reclamation = new Reclamation();
-    reclamation.setUserId(userIdValue);
-    reclamation.setDescription(descriptionValue);
-    reclamation.setDate(Date.from(dateValue.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-
-    // Appelez la méthode d'ajout de la classe ReclamationCrud
-    ReclamationCrud reclamationCrud = new ReclamationCrud();
-    reclamationCrud.ajouterReclamation(reclamation);
-        try {
-            reclamationCrud.ShowReclamation(tab_rec, id_col, date_col, desc_col);
-        } catch (SQLException ex) {
-            Logger.getLogger(PageReclamationController.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+    
     }  
 
 
@@ -171,14 +170,6 @@ public class PageReclamationController implements Initializable {
              bb.supprimerReclamation(r.getReclamationId());
             ShowReclamation();}
         else {}
-           
-       
-       
-      
-             
-       
-
-          
 
 }
         
@@ -188,16 +179,13 @@ public class PageReclamationController implements Initializable {
     @FXML
     private void modifier(MouseEvent event) {
         
-        
-                     Reclamation r= tab_rec.getSelectionModel().getSelectedItem();
+        Reclamation r= tab_rec.getSelectionModel().getSelectedItem();
 
         int idReclamationAModifier = r.getUserId(); // Remplacez ... par la façon dont vous obtenez l'ID
 
-    // Récupérez les nouvelles valeurs à partir des champs de texte ou d'autres contrôles de l'interface utilisateur
-  userid.setText(Integer.toString(r.getUserId()));
-  date_rec.setValue(r.getDate());
-  
-      String desc=description_r.getText();
+        userid.setText(Integer.toString(r.getUserId()));
+        date_rec.setValue(r.getDate());
+        String desc=description_r.getText();
 Reclamation r2=new Reclamation(r.getReclamationId(),r.getUserId(),r.getDate(),desc);
     // Appelez la méReclamationthode de modification de la classe ReclamationCrud
     ReclamationCrud rc=new ReclamationCrud();
@@ -215,41 +203,9 @@ Reclamation r2=new Reclamation(r.getReclamationId(),r.getUserId(),r.getDate(),de
         }
         else{}
     }
-/*public void ShowReclamation (TableView<Reclamation> tab_rec, TableColumn<Reclamation, Integer> id_col, 
-        TableColumn<Reclamation, String> date_col, TableColumn<Reclamation, String> desc_col) throws SQLException {
-         
-        
-         ObservableList< Reclamation> Reclamationlist =getReclamationlist();        
-         
-        id_col.setCellValueFactory(new PropertyValueFactory<>("reclamationId"));
-        date_col.setCellValueFactory(new PropertyValueFactory<>("date"));
-        desc_col.setCellValueFactory(new PropertyValueFactory<>("description"));
-       
-        tab_rec.setItems(Reclamationlist);
-}
-         private ObservableList<Reclamation> getReclamationlist() throws SQLException {
-           
-   
-     String query = "SELECT * FROM reclamation";
- 
-           
-           pst = mc.getCnx().prepareStatement(query);
-              ResultSet rs =pst.executeQuery(query);
-             ObservableList<Reclamation> reclamationlist =FXCollections.observableArrayList();
-            while (rs.next()){
-              reclamationlist.add(new Reclamation(
-    rs.getInt("reclamationId"),         ///id_a de DB
-    rs.getInt("userID"),
-    rs.getDate("date").toLocalDate(),
-    rs.getString("description")
-   
 
-              ));                    
-     } 
-        return reclamationlist;
-         
-
-}*/
+    
+    
 public void ShowReclamation() throws SQLException {
     try {
         String query = "SELECT * FROM reclamation"; // Remplacez "reclamation" par le nom de votre table
@@ -282,6 +238,29 @@ public void ShowReclamation() throws SQLException {
         System.err.println("Erreur lors de la récupération des réclamations : " + ex.getMessage());
     }
 }
+
+    @FXML
+    private void Évaluer(MouseEvent event) {
+        try {
+            // Charger la PageReclamationStat.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PageReclamationStat.fxml"));
+            Parent root = loader.load();
+
+            // Créer la scène
+            Scene scene = new Scene(root);
+
+            // Obtenir la scène actuelle à partir de n'importe quel composant de votre interface
+            Scene currentScene = ((Node) event.getSource()).getScene();
+
+            // Utilisez le stage de la scène actuelle pour afficher la nouvelle scène
+            Stage stage = (Stage) currentScene.getWindow();
+            stage.setScene(scene);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }
 
     

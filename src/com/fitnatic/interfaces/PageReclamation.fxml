@@ -10,6 +10,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fitnatic.interfaces.PageReclamationController">
    <children>
@@ -25,7 +26,7 @@
                   <Font size="26.0" />
                </font></Label>
             <Button fx:id="retour_rec" layoutX="52.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#retour" text="retour" />
-            <Button fx:id="ajouter_rec" layoutX="383.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#ajouter" prefHeight="25.0" prefWidth="70.0" text="ajouter" />
+            <Button fx:id="ajouter_rec" layoutX="372.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#ajouter" prefHeight="25.0" prefWidth="70.0" text="ajouter" />
             <DatePicker fx:id="date_rec" layoutX="77.0" layoutY="128.0" prefHeight="25.0" prefWidth="225.0" />
             <TableView fx:id="tab_rec" layoutX="355.0" layoutY="72.0" prefHeight="269.0" prefWidth="344.0">
                <columns>
@@ -35,14 +36,21 @@
                   <TableColumn fx:id="desc_col" prefWidth="128.0" text="description" />
                </columns>
             </TableView>
-            <Button fx:id="supp_rec" layoutX="609.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#supprimer" text="supprimer" />
-            <Button fx:id="modif_rec" layoutX="498.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#modifier" prefHeight="25.0" prefWidth="70.0" text="modifier" />
+            <Button fx:id="supp_rec" layoutX="610.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#supprimer" text="supprimer" />
+            <Button fx:id="modif_rec" layoutX="492.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#modifier" prefHeight="25.0" prefWidth="70.0" text="modifier" />
             <ImageView fitHeight="60.0" fitWidth="129.0" layoutX="568.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="69.0" fitWidth="150.0" layoutX="-1.0" layoutY="-2.0">
+            <ImageView fitHeight="205.0" fitWidth="200.0" layoutX="155.0" layoutY="5.0">
                <image>
-                  <Image url="@../../../../../../Downloads/387507167_259224033786896_5617290545580039491_n.jpg" />
+                  <Image url="@../image/men.png" />
                </image>
             </ImageView>
+            <ImageView fitHeight="156.0" fitWidth="225.0" layoutX="532.0" layoutY="-43.0">
+               <image>
+                  <Image url="@../image/fitnatic.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="Évaluer" layoutX="492.0" layoutY="425.0" mnemonicParsing="false" onMouseClicked="#Évaluer" prefHeight="25.0" prefWidth="70.0" text="Évaluer" />
+            <Text layoutX="355.0" layoutY="441.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Laisser un feedback svp :" wrappingWidth="138.13671875" />
          </children>
       </AnchorPane>
    </children>
