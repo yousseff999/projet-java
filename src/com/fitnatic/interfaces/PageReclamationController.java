@@ -42,7 +42,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
-
+import com.fitnatic.interfaces.SendSMS;
 /**
  * FXML Controller class
  *
@@ -154,6 +154,8 @@ public class PageReclamationController implements Initializable {
            Reclamation r=new Reclamation(reclamationId,id_u,date,desc);
         bb.ajouterReclamation(r);
         ShowReclamation();
+//            SendSMS.sendSMS();
+
         }
     
     }  
